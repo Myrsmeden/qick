@@ -1,15 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-
-  div#queue 
-    div(class="queue-empty")
-      p Kön är just nu tom
-    div(class="add-to-queue")
-      button(class="btn", onClick="addToQueue()") Ställ mig i kön
-    div(class="remove-from-queue")
-      button(class="btn", onClick="removeFromQueue()") Gå ur kön
-
-    ul#queue-list
+  h1 Välj spår
+  form 
+    input(type="text", name="name", placeholder="Skriv ditt namn")
+    select(name="track")
+      each item in queue.length ? queue : ['Spår saknas']
+        option(value=item.name) #{item.name}
+    button(class="btn",id="toQueue") Köa!

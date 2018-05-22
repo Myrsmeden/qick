@@ -8,11 +8,12 @@
     "email": "johan@myrsmeden.se"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "dotenv": "^5.0.1",
     "express": "3.4.4",
     "jade": "*",
+    "mongoose": "5.1.2",
     "socket.io": "^1.0.6",
-    "stylus": "*",
-    "mongoose": "4.5.8"
+    "stylus": "*"
   }
 }

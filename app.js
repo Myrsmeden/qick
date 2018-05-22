@@ -27,6 +27,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/queue/:track/:name', routes.queue);
 //app.get('/users', user.list);
 
 // Makes connection asynchronously.  Mongoose will queue up database
@@ -39,12 +40,21 @@ mongoose.connect(process.env.MONGODB_URI, function (err, res) {
   }
 });
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Connection error:'))
+db.once('open', function() {
+  console.log("Connected!")
+})
+
 var serve = http.createServer(app);
 var io = require('socket.io')(serve);
 
 serve.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+var QueueItem = require('./models/queueItem')
+var Queue = require('./models/queue')
 
 io.on('connection', function (socket) {
   console.log('a user connected');
@@ -54,6 +64,16 @@ io.on('connection', function (socket) {
   socket.on('message', function (msg) {
     console.log("Message!");
     console.log(msg);
+    if ( msg.action === "queue") {
+      item = new QueueItem({name: msg.name});
+      Queue.findOne({name: msg.track}, function(err, instance) {
+        if (err) console.log("Error!")
+        instance.items.push(item)
+        instance.save(function(err) {
+          console.log(err)
+        })
+      })
+    }
     io.sockets.emit('message', msg);
   });
 });

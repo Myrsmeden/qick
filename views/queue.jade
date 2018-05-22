@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Kö för #{track}
+
+  div#queue 
+    div(class="queue-empty")
+      p Kön är just nu tom
+    div(class="add-to-queue")
+      button(class="btn", onClick="addToQueue('#{track}', '#{name}')") Ställ mig i kön
+    div(class="remove-from-queue")
+      button(class="btn", onClick="removeFromQueue()") Gå ur kön
+
+    ul#queue-list
+      each item in queue.length ? queue : ['Kön är just nu tom']
+        li #{item.name}
