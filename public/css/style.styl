@@ -1,0 +1,88 @@
+color-primary = #057190
+color-contrast-blue = #46AFB8
+color-contrast-orange = #F29F4A
+color-contrast-red = #F16868
+
+
+html, body
+	width 100%
+	height 100%
+	
+body
+	background-color color-primary
+	
+.wrapper
+	text-align center
+	
+	h1
+		color #fff
+		font-size 8vw
+		
+	form
+		input[type="text"], input[type="password"]
+			width 80%
+			padding 0.4em
+			font-size 6vw
+			margin 0.2em auto
+			border-radius 0.5em
+			border none
+			display inline-block
+			clear both
+		select
+			display inline-block
+			clear both
+			width 80%
+			padding 0.4em
+			font-size 6vw
+			margin 0.2em auto
+		button
+			background-color color-contrast-orange
+			color #fff
+			width 80%
+			padding 0.2em
+			font-size 6vw
+			
+#queue
+	text-align center
+	ul
+		list-style none
+		margin 2em auto
+		li
+			color #fff
+			font-size 6vw
+			text-align left
+			border-bottom 3px dashed color-contrast-orange
+			padding 1vw
+			
+	button
+		margin 1em
+		font-weight bold
+		font-size 6vw
+		padding 0.5em
+		
+	.add-to-queue
+		button
+			background-color color-contrast-orange
+	.remove-from-queue
+		button
+			background-color color-contrast-red
+			
+.loading
+	font-size 10vw
+	color #fff
+	
+.delete-btn
+	float right
+	
+.queue-empty
+	color #fff
+	font-size 5vw
+	padding 1em
+	
+.wrongpassword 
+	color color-contrast-red
+	font-size 5vw
+	padding 0.5em
+		
+			
+			
