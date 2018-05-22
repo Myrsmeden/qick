@@ -1,3 +1,14 @@
+var showButtons = function() {
+    var in_queue = $('#queue').hasClass('in_queue');
+    if ( in_queue ) {
+        $('.add-to-queue').hide()
+        $('.remove-from-queue').show()
+    } else {
+        $('.add-to-queue').show()
+        $('.remove-from-queue').hide()
+    }
+}
+
 $(function() {
     var toQueue = function(e) {
         e.preventDefault();
@@ -7,6 +18,8 @@ $(function() {
         return false;
     }
     $('#toQueue').click(toQueue);
+
+    showButtons()
 });
 var socket = io();
 var addToQueue = function(track, name) {
@@ -16,6 +29,8 @@ var addToQueue = function(track, name) {
         action: 'queue'
     }
     socket.emit('message', msg);
+    $('#queue').addClass('in_queue')
+    showButtons()
     return false;
 }
 
@@ -26,13 +41,16 @@ var removeFromQueue = function(track, name) {
         action: 'dequeue'
     }
     socket.emit('message', msg);
+    $('#queue').removeClass('in_queue')
+    showButtons()
     return false;
 }
 socket.on('message', function (msg) {
-    console.log("Received message");
+    console.log('Received message');
     console.log(msg);
-    if ( msg.action === "queue")
+    if ( msg.action === 'queue')
         $('#queue-list').append($('<li>').text(msg.name))
-    if ( msg.action === "dequeue")
+        $('.queue-empty').hide()
+    if ( msg.action === 'dequeue')
         $('li').filter(function() { return $.text([this]) === msg.name; }).remove()
 });

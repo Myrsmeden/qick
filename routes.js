@@ -6,7 +6,6 @@ exports.index = function(req, res){
         if ( err ) {
             console.err(err);
         }
-        console.log(queue);
         res.render('index', { title: 'Muu', queue: queue });
     })
 };
@@ -16,8 +15,6 @@ exports.queue = function(req, res){
     var name = req.params.name;
     Queue.findOne({name: track}, function(err, queue) {
         var items = queue.items || []
-        console.log(queue)
-        console.log(items)
         res.render('queue', { title: 'Kön', track: track, name: name, queue: items });
     })
 };

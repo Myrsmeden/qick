@@ -66,7 +66,7 @@ io.on('connection', function (socket) {
         if (err) console.log("Error!")
         instance.items.push(item)
         instance.save(function(err) {
-          console.log(err)
+          //
         })
       })
     }
