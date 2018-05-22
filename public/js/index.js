@@ -10,7 +10,6 @@ $(function() {
 });
 var socket = io();
 var addToQueue = function(track, name) {
-    console.log("Clicking the button");
     var msg = {
         track: track,
         name: name,
@@ -19,9 +18,21 @@ var addToQueue = function(track, name) {
     socket.emit('message', msg);
     return false;
 }
+
+var removeFromQueue = function(track, name) {
+    var msg = {
+        track: track,
+        name: name,
+        action: 'dequeue'
+    }
+    socket.emit('message', msg);
+    return false;
+}
 socket.on('message', function (msg) {
     console.log("Received message");
     console.log(msg);
     if ( msg.action === "queue")
-        $('#queue-list').append($('<li>').text(msg.name));
+        $('#queue-list').append($('<li>').text(msg.name))
+    if ( msg.action === "dequeue")
+        $('li').filter(function() { return $.text([this]) === msg.name; }).remove()
 });

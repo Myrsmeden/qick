@@ -28,7 +28,6 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/queue/:track/:name', routes.queue);
-//app.get('/users', user.list);
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
@@ -57,13 +56,10 @@ var QueueItem = require('./models/queueItem')
 var Queue = require('./models/queue')
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
   socket.on('disconnect', function () {
-      console.log('user disconnected');
+      // User disconnected
   });
   socket.on('message', function (msg) {
-    console.log("Message!");
-    console.log(msg);
     if ( msg.action === "queue") {
       item = new QueueItem({name: msg.name});
       Queue.findOne({name: msg.track}, function(err, instance) {
@@ -73,6 +69,13 @@ io.on('connection', function (socket) {
           console.log(err)
         })
       })
+    }
+    if ( msg.action === "dequeue") {
+      Queue.update( {name: msg.track}, { $pull: {items: {name: msg.name} } }, 
+      {multi: true}, 
+      function(err, obj) {
+        //
+      } )
     }
     io.sockets.emit('message', msg);
   });

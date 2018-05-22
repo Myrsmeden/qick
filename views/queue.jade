@@ -10,8 +10,8 @@ block content
     div(class="add-to-queue")
       button(class="btn", onClick="addToQueue('#{track}', '#{name}')") Ställ mig i kön
     div(class="remove-from-queue")
-      button(class="btn", onClick="removeFromQueue()") Gå ur kön
+      button(class="btn", onClick="removeFromQueue('#{track}', '#{name}')") Gå ur kön
 
     ul#queue-list
       each item in queue.length ? queue : ['Kön är just nu tom']
-        li #{item.name}
+        li(id=item._id) #{item.name}

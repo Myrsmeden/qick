@@ -21,7 +21,3 @@ exports.queue = function(req, res){
         res.render('queue', { title: 'Kön', track: track, name: name, queue: items });
     })
 };
-
-exports.user = function(req, res){
-    res.render('index', { title: 'User' });
-};
