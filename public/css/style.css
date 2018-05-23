@@ -82,3 +82,8 @@ body {
   font-size: 5vw;
   padding: 0.5em;
 }
+.error {
+  text-align: left;
+  color: #fff;
+  margin: 2em;
+}
