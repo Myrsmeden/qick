@@ -1,15 +1,18 @@
 extends layout
 
 block content
-	div.container
-		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
-				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href='/signout', class='text-center new-account') Sign Out
+  h1 Välj spår
+  form 
+    select(name="track")
+      each item in queue.length ? queue : ['Spår saknas']
+        option(value=item.name) #{item.name}
+    button(class="btn",id="toAdminQueue") Gå till kö
+
+  form(method="post", action="/admin/queue") 
+    input(type="text", name="track", placeholder="Skriv spårnamn")
+    button(class="btn",id="addTrack") Lägg till spår
+
+block body_end 
+    script(type='text/javascript' src='/js/index.js')
+    script(type='text/javascript' src='/js/admin.js')
+

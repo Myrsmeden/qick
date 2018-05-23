@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Kö för #{track}
+
+  div#queue(class= in_queue ? "in_queue" : "")
+    if queue.length < 1
+      div(class="queue-empty")
+        p Kön är just nu tom
+
+    ul#queue-list-admin(data-track=track)
+      each item in queue.length ? queue : []
+        li(id=item._id) 
+         p #{item.name}
+         span(class="fa fa-times")
+block body_end 
+    script(type='text/javascript' src='/js/index.js')
+    script(type='text/javascript' src='/js/admin.js')

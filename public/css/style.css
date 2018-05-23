@@ -87,3 +87,11 @@ body {
   color: #fff;
   margin: 2em;
 }
+#queue-list-admin p {
+  display: inline-block;
+}
+#queue-list-admin span {
+  float: right;
+  display: inline-block;
+  margin: 0.3em;
+}

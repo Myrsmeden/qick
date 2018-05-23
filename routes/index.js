@@ -9,8 +9,8 @@ var isAuthenticated = function (req, res, next) {
 	// request and response objects
 	if (req.isAuthenticated())
 		return next();
-	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/');
+	// if the user is not authenticated then redirect them to the login page
+	res.redirect('/login');
 }
 
 module.exports = function(passport){
@@ -41,8 +41,8 @@ module.exports = function(passport){
 
 	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
-		failureRedirect: '/',
+		successRedirect: '/admin',
+		failureRedirect: '/login',
 		failureFlash : true  
 	}));
 
@@ -58,9 +58,35 @@ module.exports = function(passport){
 		failureFlash : true  
 	}));
 
-	/* GET Home Page */
+	/* GET Admin Page */
 	router.get('/admin', isAuthenticated, function(req, res){
-		res.render('admin', { user: req.user });
+        Queue.find({}, function(err, queue) {
+            if ( err ) {
+                console.err(err);
+            }
+            res.render('admin', { title: 'Muu', queue: queue, user: req.user });
+        })
+    });
+    
+    router.get('/admin/queue/:track', isAuthenticated, function(req, res){
+        var track = req.params.track;
+        Queue.findOne({name: track}, function(err, queue) {
+            var items = queue.items || []
+            res.render('adminQueue', { title: 'Kön', track: track, queue: items });
+        })
+    });
+    
+    router.post('/admin/queue', isAuthenticated, function(req, res){
+        var track = req.body.track;
+        console.log("Adding queue for ", track)
+        var queue = new Queue({name: track})
+        queue.save(function(err) {
+            if (err) {
+                console.log("Kunde inte skapa spår " + track)
+            } 
+        });
+        res.redirect('/admin');
+
 	});
 
 	/* Handle Logout */

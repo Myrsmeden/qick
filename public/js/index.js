@@ -50,6 +50,7 @@ socket.on('message', function (msg) {
     console.log(msg);
     if ( msg.action === 'queue')
         $('#queue-list').append($('<li>').text(msg.name))
+        $('#queue-list-admin').append('<li><p>' + msg.name + '</p><span class="fa fa-times"></span></li>')
         $('.queue-empty').hide()
     if ( msg.action === 'dequeue')
         $('li').filter(function() { return $.text([this]) === msg.name; }).remove()
